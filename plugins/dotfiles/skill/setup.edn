@@ -1,0 +1,121 @@
+{:schema-version 1
+ :platforms [:linux :macos]
+ :file-limit-bytes 2097152
+ :files
+ [{:id "mise.config" :asset "assets/configs/mise/config.toml"
+   :target ".config/mise/config.toml" :ignore-comments true
+   :priority 1 :remediation "Back up and merge the complete bundled mise config, preserving all tools and settings; review before running mise install."}
+  {:id "ghostty.config" :asset "assets/configs/ghostty/config"
+   :target ".config/ghostty/config" :ignore-comments true
+   :priority 2 :remediation "Back up and merge the Ghostty baseline. On macOS also inspect the native Application Support config for conflicting overrides; verify shortcuts manually."}
+  {:id "herdr.config" :asset "assets/configs/herdr/config.toml"
+   :target ".config/herdr/config.toml" :ignore-comments true
+   :priority 2 :remediation "Back up and merge Herdr settings. Preserve unrelated local preferences; verify Ctrl-T prefix and reviewr toggle after separate approval."}
+  {:id "reviewr.config" :asset "assets/configs/herdr/reviewr.toml"
+   :target ".config/herdr/plugins/config/persiyanov.reviewr/config.toml" :ignore-comments true
+   :priority 2 :remediation "Back up and merge reviewr's github-light theme in its own configuration, not Herdr's main config."}
+  {:id "emacs.init" :asset "assets/configs/emacs/init.el" :target ".emacs.d/init.el"
+   :priority 2 :remediation "Review the bundled Emacs 31 init and back up the existing init before merging. First launch bootstraps Elpaca over the network; do not run it during audit."}
+  {:id "emacs.early-init" :asset "assets/configs/emacs/early-init.el" :target ".emacs.d/early-init.el"
+   :priority 2 :remediation "Back up and merge the terminal-only Elpaca early-init settings."}
+  {:id "shell.common" :asset "assets/configs/shell/common.sh" :target ".config/my-pi/shell/common.sh"
+   :priority 2 :remediation "Deploy this reviewed shared fragment alongside the Bash/Zsh fragments; review PATH, editor and pit aliases."}
+  {:id "shell.zsh" :asset "assets/configs/shell/zshrc" :target ".config/my-pi/shell/zshrc"
+   :priority 2 :remediation "Deploy the curated Zsh fragment, then merge its source hook into ~/.zshrc once. Remove older competing prompt/tool initialization and wtc/wt integration."}
+  {:id "shell.bash" :asset "assets/configs/shell/bashrc" :target ".config/my-pi/shell/bashrc"
+   :priority 2 :remediation "Deploy the curated Bash fragment, then merge its source hook into ~/.bashrc once. Remove older competing prompt/tool initialization and wt integration."}
+  {:id "pi.global" :asset "assets/pi/AGENTS.md" :target ".pi/agent/AGENTS.md" :comparison :presence
+   :priority 2 :remediation "If absent or empty, install the bundled global instructions after approval and adapt the repository path for this machine. If present, preserve it: machine-specific content differences are allowed and should be noted in the review, not flagged as drift."}
+  {:id "pi.team" :asset "assets/pi/team/TEAM.md" :target ".pi/agent/team/TEAM.md"
+   :priority 2 :remediation "Restore the reviewed TEAM.md at the path referenced by pit and role launch commands. Do not add it to auto-loaded global context."}
+  {:id "pi.orchestrator" :asset "assets/pi/orchestrator/SYSTEM.md" :target ".pi/agent/orchestrator/SYSTEM.md"
+   :priority 2 :remediation "Restore the reviewed orchestrator prompt. Select it explicitly with --append-system-prompt; never auto-launch a team as part of setup audit."}
+  {:id "pi.planner" :asset "assets/pi/planner/SYSTEM.md" :target ".pi/agent/planner/SYSTEM.md"
+   :priority 2 :remediation "Restore the reviewed planner prompt and select it explicitly in role launch commands."}
+  {:id "pi.implementer" :asset "assets/pi/implementer/SYSTEM.md" :target ".pi/agent/implementer/SYSTEM.md"
+   :priority 2 :remediation "Restore the reviewed implementer prompt and select it explicitly in role launch commands."}
+  {:id "pi.reviewer" :asset "assets/pi/reviewer/SYSTEM.md" :target ".pi/agent/reviewer/SYSTEM.md"
+   :priority 2 :remediation "Restore the reviewed reviewer prompt and select it explicitly in role launch commands."}
+  {:id "pi.tester" :asset "assets/pi/tester/SYSTEM.md" :target ".pi/agent/tester/SYSTEM.md"
+   :priority 2 :remediation "Restore the reviewed tester prompt and select it explicitly in role launch commands."}
+  {:id "pi.herdr-skill" :asset "assets/pi/herdr.md" :target ".pi/agent/skills/herdr.md"
+   :priority 2 :remediation "Restore the Herdr skill required by the orchestrator; keep its explicit Herdr routing and managed-pane safety rules."}]
+ :mise-tools
+ [{:id "node" :directory "node" :binary "node"}
+  {:id "java" :directory "java" :binary "java"}
+  {:id "maven" :directory "maven" :binary "mvn"}
+  {:id "gh" :directory "gh" :binary "gh"}
+  {:id "clojure" :directory "clojure" :binary "clojure"}
+  {:id "clj-kondo" :directory "clj-kondo" :binary "clj-kondo"}
+  {:id "github:clojure-lsp/clojure-lsp" :directory "github-clojure-lsp-clojure-lsp" :binary "clojure-lsp"}
+  {:id "github:weavejester/cljfmt" :directory "github-weavejester-cljfmt" :binary "cljfmt"}
+  {:id "babashka" :directory "babashka" :binary "bb"}
+  {:id "leiningen" :directory "leiningen" :binary "lein"}
+  {:id "ruff" :directory "ruff" :binary "ruff"}
+  {:id "ty" :directory "ty" :binary "ty"}
+  {:id "uv" :directory "uv" :binary "uv"}
+  {:id "prettier" :directory "prettier" :binary "prettier"}
+  {:id "tokei" :directory "tokei" :binary "tokei"}
+  {:id "github:favetelinguis/hindsight" :directory "github-favetelinguis-hindsight" :binary "hindsight"}
+  {:id "github:ogulcancelik/herdr" :directory "github-ogulcancelik-herdr" :binary "herdr"}
+  {:id "github:junegunn/fzf" :directory "github-junegunn-fzf" :binary "fzf"}
+  {:id "github:BurntSushi/ripgrep" :directory "github-burnt-sushi-ripgrep" :binary "rg"}
+  {:id "github:sharkdp/fd" :directory "github-sharkdp-fd" :binary "fd"}
+  {:id "github:ajeetdsouza/zoxide" :directory "github-ajeetdsouza-zoxide" :binary "zoxide"}
+  {:id "npm:@earendil-works/pi-coding-agent" :directory "npm-earendil-works-pi-coding-agent" :binary "pi"}]
+ :binaries
+ [{:id "tool.mise" :binary "mise" :priority 1
+   :remediation "Install mise using the actual platform's documented installation method; do not run an installer during audit."}
+  {:id "tool.zsh" :binary "zsh" :priority 1 :remediation "Install Zsh if absent; changing the login shell is a separate approved action."}
+  {:id "tool.bash" :binary "bash" :priority 1 :remediation "Ensure Bash is installed. Check that the available version supports the chosen mise/fzf integration on macOS."}
+  {:id "tool.git" :binary "git" :priority 1 :remediation "Install Git; required by Elpaca and reviewr."}
+  {:id "tool.jq" :binary "jq" :priority 1 :remediation "Install jq; required by the bundled Herdr Emacs-tab command."}
+  {:id "tool.emacsclient" :binary "emacsclient" :priority 1 :remediation "Install the client matching the Emacs installation; terminal Emacs is the baseline."}
+  {:id "tool.infocmp" :binary "infocmp" :priority 1 :remediation "Provide ncurses terminfo tools for the e alias; keep the current TERM fallback where xterm-direct is unavailable."}]
+ :applications
+ [{:id "app.ghostty" :binary "ghostty" :paths {:linux [] :macos ["/Applications/Ghostty.app" "Applications/Ghostty.app"]}
+   :priority 1 :remediation "Install Ghostty using a supported platform method. A macOS .app is acceptable even without a ghostty binary on PATH."}
+  {:id "app.toolbox" :binary "jetbrains-toolbox"
+   :paths {:linux [".local/share/JetBrains/Toolbox/bin/jetbrains-toolbox"]
+           :macos ["/Applications/JetBrains Toolbox.app" "Applications/JetBrains Toolbox.app"]}
+   :priority 1 :remediation "Install JetBrains Toolbox from JetBrains. Sign-in/license decisions are manual; do not copy account state."}
+  {:id "app.intellij" :binary "idea"
+   :paths {:linux [".local/share/JetBrains/Toolbox/apps/intellij-idea/bin/idea.sh"]
+           :macos ["/Applications/IntelliJ IDEA.app" "Applications/IntelliJ IDEA.app"
+                   "Library/Application Support/JetBrains/Toolbox/apps/intellij-idea/IntelliJ IDEA.app"]}
+   :priority 1 :remediation "Install IntelliJ IDEA through Toolbox and enable its idea launcher. Review actual Toolbox app paths before declaring absence; other install layouts are unknown, not proof the app is missing."}]
+ :shell-hooks
+ [{:id "shell.zsh-hook" :target ".zshrc" :hook ". \"$HOME/.config/my-pi/shell/zshrc\""
+   :priority 3 :remediation "Merge the exact source hook once into ~/.zshrc after removing old conflicting definitions. Do not overwrite the complete existing rc file."}
+  {:id "shell.bash-hook" :target ".bashrc" :hook ". \"$HOME/.config/my-pi/shell/bashrc\""
+   :priority 3 :remediation "Merge the exact source hook once into ~/.bashrc, remove wt hooks, and ensure the login profile sources ~/.bashrc. Do not overwrite unrelated settings."}]
+ :pi-packages
+ [{:source "npm:pi-mcp-adapter" :priority 1}
+  {:source "npm:pi-web-access" :priority 1}
+  {:source "npm:@juicesharp/rpiv-ask-user-question" :priority 1}]
+ :reviewr {:id "plugin.reviewr" :plugin-id "persiyanov.reviewr" :source "persiyanov/herdr-reviewr"
+           :observed-version "0.39.0" :minimum-herdr "0.7.5" :priority 1
+           :remediation "After approval, install with herdr plugin install persiyanov/herdr-reviewr. Preserve the plugin source, enabled state and toggle binding. The observed 0.39.0 is provenance, not a version pin."}
+ :manual
+ [{:id "integration.ghostty-herdr" :priority 3
+   :desired "Ghostty's Ctrl-T sequences reach Herdr; cmd+8 scratch, cmd+9 Emacs, cmd+0 notes; reviewr toggles with prefix+r."
+   :remediation "Verify interactively after config deployment. The current Ghostty cmd+shift+enter sends prefix+u without an established custom binding; decide whether to bind or remove it."}
+  {:id "integration.emacs-packages" :priority 3
+   :desired "Elpaca-managed packages load in terminal Emacs 31; kkp, clipboard and IDEA launcher work."
+   :remediation "After approval, launch Emacs with the reviewed init to bootstrap packages, check startup errors and terminal behavior. Do not copy package caches; optional RustRover, kdlfmt and local_only overrides are not required baseline tools."}
+  {:id "integration.shell-effective" :priority 3
+   :desired "Both shells display the imported prompt, have working aliases, and no wtc or wt integration; no later overrides undo the managed fragment."
+   :remediation "Inspect source order and test in a fresh interactive terminal after approval. Ensure Bash login startup sources ~/.bashrc. The auditor never sources rc files."}
+  {:id "integration.pi-team" :priority 3
+   :desired "pit resolves all team/role files; the orchestrator's exact model hints are available under the chosen provider."
+   :remediation "Check provider/model availability without exposing credentials, then test explicitly selected role prompts in Herdr only after approval. Do not silently substitute models or start the team during audit."}
+  {:id "integration.macos-overrides" :platforms [:macos] :priority 3
+   :desired "Native Ghostty config does not override the baseline; Toolbox paths, shortcut permissions and daemon startup match macOS."
+   :remediation "Review ~/Library/Application Support/com.mitchellh.ghostty/config and actual Toolbox layout. Approve a launchd daemon definition and keyboard permissions; Linux fixture tests cannot establish macOS runtime behavior."}]
+ :limitations
+ ["Latest means the declared mise policy, not verified upstream freshness. Tool installs and PATH are checked without executing their startup hooks."
+  "Matching files, plugin registration and app paths do not prove live UI integration. Manual checks remain unknown until separately verified."
+  "No shell rc sourcing, Emacs init loading, package installs, network access, Herdr session control or setup application is performed."
+  "Configurations are compared as text, ignoring CRLF, trailing whitespace, portable home prefixes, and full-line # comments where declared. Equivalent formatting or local additions can report drift; merge rather than blindly replace."
+  "Custom MISE_DATA_DIR is honored on the actual home. Non-default XDG/PI agent directories, Toolbox layouts, Ghostty native overrides and Pi global override files need explicit review."
+  "Linux is grounded in the source Arch machine. macOS has shared baselines and documented setup guidance but has not been verified on macOS."]}

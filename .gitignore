@@ -1,0 +1,12 @@
+node_modules/
+.pi/
+.agent/
+reports/
+*.log
+.DS_Store
+auth.json
+secrets.sh
+.env
+.env.*
+*.pem
+*.key

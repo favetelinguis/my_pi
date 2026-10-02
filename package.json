@@ -1,0 +1,26 @@
+{
+  "name": "favetelinguis-my-pi",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Personal Pi plugins and an explicit-only computer setup audit",
+  "license": "UNLICENSED",
+  "keywords": ["pi-package"],
+  "repository": { "type": "git", "url": "https://github.com/favetelinguis/my_pi.git" },
+  "pi": {
+    "extensions": ["./plugins/dotfiles/extension.ts"],
+    "skills": ["./plugins/dotfiles/skill/SKILL.md"],
+    "prompts": ["./prompts/prompt.md"],
+    "themes": []
+  },
+  "peerDependencies": { "@earendil-works/pi-coding-agent": ">=0.87.1" },
+  "devDependencies": {
+    "@earendil-works/pi-coding-agent": "0.87.1",
+    "@types/node": "^22.0.0",
+    "typescript": "^5.9.3"
+  },
+  "scripts": {
+    "check": "tsc --noEmit",
+    "test": "bb test",
+    "test:pi": "bb test-pi"
+  }
+}

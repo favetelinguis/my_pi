@@ -1,0 +1,24 @@
+# Managed fragment: source once from ~/.bashrc after reviewing/removing conflicts.
+[[ $- != *i* ]] && return
+
+case ":$PATH:" in
+    *":$HOME/.local/share/mise/shims:"*) ;;
+    *) export PATH="$HOME/.local/share/mise/shims:$PATH" ;;
+esac
+if command -v mise >/dev/null 2>&1; then
+    eval "$(mise activate bash)"
+fi
+. "$HOME/.config/my-pi/shell/common.sh"
+
+# One-time import from chezmoi's dot_config/shell/local.sh.tmpl.
+PS1='\[\e[34m\]\w\[\e[0m\]\n\$ '
+
+if [ -t 0 ] && [ -t 1 ] && command -v fzf >/dev/null 2>&1; then
+    eval "$(fzf --bash)"
+fi
+if command -v zoxide >/dev/null 2>&1; then
+    eval "$(zoxide init --cmd j bash)"
+fi
+if command -v hindsight >/dev/null 2>&1; then
+    eval "$(hindsight init bash)"
+fi

@@ -1,0 +1,32 @@
+[tools]
+node = "latest"
+java = "latest"
+maven = "latest"
+
+gh = "latest"
+
+clojure = "latest"
+clj-kondo = "latest"
+"github:clojure-lsp/clojure-lsp" = "latest"
+"github:weavejester/cljfmt" = "latest"
+babashka = "latest"
+leiningen = "2.12.0"
+
+ruff = "latest"
+ty = "latest"
+uv = "latest"
+prettier = "latest"
+tokei = "latest"
+
+"github:favetelinguis/hindsight" = "latest"
+"github:ogulcancelik/herdr" = "latest"
+"github:junegunn/fzf" = "latest"
+"github:BurntSushi/ripgrep" = { version = "latest", exe = "rg" }
+"github:sharkdp/fd" = "latest"
+"github:ajeetdsouza/zoxide" = "latest"
+
+"npm:@earendil-works/pi-coding-agent" = "latest"
+
+[settings]
+# own repo — skip the minimum-release-age supply-chain cooldown
+minimum_release_age_excludes = ["github:favetelinguis/hindsight"]

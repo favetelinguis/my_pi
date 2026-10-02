@@ -1,0 +1,101 @@
+onboarding = false
+
+[theme]
+name = "tokyo-night-day"
+auto_switch = false
+
+[ui]
+agent_panel_sort = "spaces"
+status_indicators = "symbols"
+#pane_borders = "off"
+#pane_gaps = false
+#pane_outer_borders = false
+
+# Ask for a workspace name on interactive create instead of auto-naming from the repo/cwd.
+prompt_new_workspace_name = true
+
+# Space rows: one line only — state icon + workspace name. Branch and git
+# ahead/behind counts are too noisy/long for the narrow sidebar.
+#[ui.sidebar.spaces]
+#row_gap = 1
+#rows = [
+#  ["state_icon", "workspace"],
+#]
+
+# Agent rows: show the pane name next to the workspace name.
+# Built-in tokens: state_icon, state_text, workspace, tab, pane, agent,
+# terminal_title, terminal_title_stripped (+ $custom pane metadata).
+#[ui.sidebar.agents]
+#row_gap = 0
+#rows = [
+#  ["state_icon", "workspace"],
+#  ["pane"],
+#]
+
+[ui.sound]
+# Requirement 4: silence all agent-state sounds (incl. the blocked/needs-attention alert).
+enabled = false
+
+[keys]
+# Match Ghostty's Ctrl-T prefix (\x14).
+prefix = "ctrl+t"
+open_worktree = "prefix+shift+o"
+
+# Requirement 2: cycle blocked/needs-attention agents. agent_panel_sort="priority" sorts them first.
+previous_agent = "prefix+["
+next_agent     = "prefix+]"
+
+# Requirement 3: jump between workspaces (workspace_picker stays on prefix+w; goto on prefix+g).
+# Bind the literal brace chars — that's what the terminal actually sends for shift+[ / shift+].
+previous_workspace = "prefix+{"
+next_workspace     = "prefix+}"
+
+# cmd+8 (Ghostty sends prefix+i): open a scratch shell over the current tab.
+[[keys.command]]
+key = "prefix+i"
+type = "popup"
+command = "exec \"${SHELL:-sh}\""
+description = "open scratch terminal"
+width = "80%"
+height = "80%"
+
+[[keys.command]]
+key = "prefix+r"
+type = "plugin_action"
+command = "persiyanov.reviewr.toggle"
+
+# cmd+9 (Ghostty sends prefix+f): focus the emacs tab, or create it at the active pane's cwd.
+[[keys.command]]
+key = "prefix+f"
+type = "pane"
+command = '''
+set -e
+source=$(herdr pane get "${HERDR_ACTIVE_PANE_ID:?}")
+workspace=$(printf '%s' "$source" | jq -r '.result.pane.workspace_id')
+origin_tab=$(printf '%s' "$source" | jq -r '.result.pane.tab_id')
+cwd=$(printf '%s' "$source" \
+  | jq -r '.result.pane.foreground_cwd // .result.pane.cwd // empty')
+cwd="${cwd:-$PWD}"
+existing=$(herdr tab list --workspace "$workspace" \
+  | jq -r '.result.tabs[] | select(.label == "emacs") | .tab_id' | head -n 1)
+if [ -n "$existing" ]; then
+  herdr tab focus "$existing"
+else
+  created=$(herdr tab create --workspace "$workspace" --cwd "$cwd" --label emacs --focus)
+  pane=$(printf '%s' "$created" | jq -r '.result.root_pane.pane_id')
+  tab=$(printf '%s' "$created" | jq -r '.result.tab.tab_id')
+  herdr pane run "$pane" "emacsclient -nw $(printf '%q' "$cwd"); herdr tab focus $(printf '%q' "$origin_tab"); herdr tab close $(printf '%q' "$tab")"
+fi
+'''
+description = "focus or open emacs tab at cwd"
+
+# cmd+0 (Ghostty sends prefix+t): helix in a popup, opening _TODO.md directly.
+# hx -w pins helix's working dir to the notes folder, so the file picker (space f)
+# and global search (space /) still cover every note.
+[[keys.command]]
+key = "prefix+t"
+type = "popup"
+command = "exec emacsclient -nw \"$HOME/.local/share/hldenote/_TODO.org\""
+description = "open notes"
+width = "80%"
+height = "80%"
