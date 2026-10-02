@@ -1,8 +1,5 @@
 node_modules/
-.pi/
-.agent/
-reports/
-*.log
+/.pi/
 .DS_Store
 auth.json
 secrets.sh

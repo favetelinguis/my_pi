@@ -1,8 +1,0 @@
-{:paths ["plugins/dotfiles/skill/scripts" "tests"]
- :tasks
- {audit {:doc "Read-only setup audit (append --json for JSON output)"
-         :task (apply shell "bb" "plugins/dotfiles/skill/scripts/audit.clj" *command-line-args*)}
-  test {:doc "Deterministic audit and package tests"
-        :task (exec 'audit-test/run-tests!)}
-  test-pi {:doc "Pi install/remove and RPC discovery smoke test in an isolated agent directory"
-           :task (exec 'pi-test/run-test!)}}}

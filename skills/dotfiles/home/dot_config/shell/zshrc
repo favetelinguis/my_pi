@@ -1,14 +1,10 @@
-# Managed fragment: source once from ~/.zshrc after reviewing/removing conflicts.
+# Interactive Zsh setup. Sourced from ~/.zshrc.
 [[ -o interactive ]] || return
 
-case ":$PATH:" in
-    *":$HOME/.local/share/mise/shims:"*) ;;
-    *) export PATH="$HOME/.local/share/mise/shims:$PATH" ;;
-esac
 if command -v mise >/dev/null 2>&1; then
     eval "$(mise activate zsh)"
 fi
-. "$HOME/.config/my-pi/shell/common.sh"
+. "$HOME/.config/shell/common.sh"
 
 autoload -Uz compinit
 compinit
@@ -18,7 +14,6 @@ SAVEHIST=1000
 unsetopt beep
 bindkey -e
 
-# One-time import from chezmoi's dot_config/shell/local.sh.tmpl.
 PROMPT=$'%F{blue}%~%f\n%(1j.%j>.0> )'
 
 if [ -t 0 ] && [ -t 1 ] && command -v fzf >/dev/null 2>&1; then

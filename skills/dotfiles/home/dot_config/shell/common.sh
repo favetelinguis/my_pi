@@ -1,5 +1,4 @@
-# Curated setup shared by interactive Bash and Zsh. No secrets or worktrunk hooks.
-# Source after mise activation so installed tools are on PATH.
+# Shared by interactive Bash and Zsh. Sourced after mise activation so installed tools are on PATH.
 case "$(uname -s)" in
     Darwin)
         alias ls='ls -G'
