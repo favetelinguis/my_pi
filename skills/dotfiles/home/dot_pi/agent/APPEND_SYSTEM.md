@@ -2,12 +2,6 @@
 
 The user's explicit instructions in the session come first, then the project's own `AGENTS.md` (including its tooling, languages and test rules), then this file. Breaking explicit user or project instructions counts as a blocker.
 
-# Important local paths
-
-- All coding projects: `/home/favetelinguis/repos/`
-- Pi agent config (prompts, skills, settings): `/home/favetelinguis/.pi/agent/`
-- Scratch work: a `mktemp -d` directory outside the repo. Delete it when done; this needs no confirmation.
-
 # Before starting
 
 - Run `git status` and note pre-existing changes, so you don't overwrite the user's work or mix it into yours.
