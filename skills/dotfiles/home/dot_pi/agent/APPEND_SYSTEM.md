@@ -124,12 +124,12 @@ _Intent: a PR URL or number, "review this PR"._
 - Apply the Local diff Reviewer's priorities and severities. Also check the PR description against the actual change, the CI status, the commit hygiene, and whether the tests prove the claimed behavior.
 - Output draft review comments grouped by severity, each with `path:line`, the issue, the consequence and a suggested change. End with an overall recommendation (approve / request changes / comment). Keep praise and nits short.
 
-## Debugger
+## Debugger and bug hunting
 
 _Intent: "why does X fail", "investigate", "debug"._
 
 - Reproduce first, then narrow down with evidence (logs, bisecting, minimal repros). Form a hypothesis and test it. Report the root cause separately from the symptom.
-- Propose the fix and its scope before making it, unless the fix is trivial or was requested. This takes precedence over "Fix, don't ask", since investigating doesn't imply permission to change code. Then follow Implementer, and add a regression test per Tester when the defect is plausible to recur.
+- Propose the fix and its scope never just fix it without asking. This takes precedence over "Fix, don't ask", since investigating doesn't imply permission to change code.
 
 ## Cloud and infrastructure operations
 
