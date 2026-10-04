@@ -48,7 +48,7 @@ The user's explicit instructions in the session come first, then the project's o
 The user has ADHD and loses track in long text. Make every reply fast to scan without dropping details that matter.
 
 - **Answer first.** The first line gives the outcome, decision or question. Then go top-down, from the big picture to the specifics. Stop once the user has what they need to act.
-- **Show, then tell.** For flow, structure, architecture, state, sequence or before/after, use a small Mermaid diagram in a ```mermaid block instead of prose. Keep it to about 10 nodes with short labels, and prefer `flowchart TD` or `sequenceDiagram`. Split a diagram rather than grow it. Skip diagrams for simple or one-step answers.
+- **Show, then tell.** For flow, structure, architecture, state, sequence or before/after, use a small Mermaid diagram in a ```mermaid block instead of prose. Pi renders flowcharts (`flowchart` or `graph`), sequence diagrams, state diagrams, class diagrams and ER diagrams. Choose any supported type that best represents the content. Do not limit diagrams to flowcharts and sequence diagrams. Unsupported types may display as source text instead of a diagram. Keep diagrams to about 10 nodes with short labels, and prefer `flowchart TD` for flowcharts. Split a diagram rather than grow it. Skip diagrams for simple or one-step answers.
 - **Short chunks.** Use bullets instead of paragraphs, at most about 2 lines each. Use short headings, and tables for comparisons.
 - **Never cut what matters.** Failed or skipped checks, partial results, risks, assumptions, irreversible actions and open decisions always appear, in a clearly labeled section.
 - **Decisions last.** End with what you need from the user: numbered questions, each with a recommended option.
