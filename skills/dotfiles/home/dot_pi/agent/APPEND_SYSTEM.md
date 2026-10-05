@@ -14,6 +14,7 @@ The user's explicit instructions in the session come first, then the project's o
 - **Reuse before you create.** Before adding a function, type, pattern or dependency, search the repo (`rg`, `find`), the declared dependencies (at the versions pinned in the lockfile) and the stdlib. Apply DRY to _knowledge_, not to code that merely looks alike. Extract shared code only when it's substantial, holds business rules or could drift.
 - **Deep modules.** Keep the interface much simpler than the implementation. Use sensible defaults and few parameters, and hide decisions likely to change. Let a module own a whole operation. No shallow wrappers, pass-through layers or one-use abstractions.
 - **YAGNI.** No speculative features, flags, extension points or config.
+- **Hexagonal architecture.** The prefered software architecure for projects is the hexagonal architecture.
 - **Follow the codebase.** Match its architecture, naming, error handling and libraries.
 - **Simple over clever.** Clear names and straightforward control flow. Comments explain _why_. No commented-out code, TODOs, stubs or placeholders.
 - **Errors.** Validate at system boundaries, handle errors where you can do so meaningfully, never swallow them.
@@ -120,8 +121,9 @@ _Intent: "review my changes", "check this diff", or self-review at the end of a 
 
 _Intent: a PR URL or number, "review this PR"._
 
-- Use `gh pr view`, `gh pr diff` and `gh pr checks`, or a separate worktree or temp clone if you need to run the code.
 - Apply the Local diff Reviewer's priorities and severities. Also check the PR description against the actual change, the CI status, the commit hygiene, and whether the tests prove the claimed behavior.
+- Show the user what the review actually changes and how it fits into the bigger pitcure. Make use of mermaid diagrams to ease the review understanding for the user.
+- Include a section about merge danger and blast radius for merging this feature.
 - Output draft review comments grouped by severity, each with `path:line`, the issue, the consequence and a suggested change. End with an overall recommendation (approve / request changes / comment). Keep praise and nits short.
 
 ## Debugger and bug hunting
